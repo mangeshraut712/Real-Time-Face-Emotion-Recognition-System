@@ -248,7 +248,7 @@ class HaarCascadeDetector:
         locations = [
             Path(__file__).parent.parent.parent / "haarcascade_files" / self.DEFAULT_CASCADE,
             Path("haarcascade_files") / self.DEFAULT_CASCADE,
-            Path(cv2.data.haarcascades) / self.DEFAULT_CASCADE,
+            Path(cv2.data.haarcascades) / self.DEFAULT_CASCADE,  # type: ignore
         ]
 
         for loc in locations:
@@ -365,7 +365,9 @@ class FaceDetector:
         if backend == DetectorBackend.MEDIAPIPE:
             if not MEDIAPIPE_AVAILABLE:
                 raise ImportError("MediaPipe not installed. Install with: pip install mediapipe")
-            self._detector = MediaPipeFaceDetector(min_detection_confidence=min_confidence)
+            self._detector: MediaPipeFaceDetector | HaarCascadeDetector = (
+                MediaPipeFaceDetector(min_detection_confidence=min_confidence)
+            )
         else:
             self._detector = HaarCascadeDetector(
                 cascade_path=cascade_path,

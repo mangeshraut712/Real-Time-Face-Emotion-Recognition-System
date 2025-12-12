@@ -221,7 +221,7 @@ class VideoWriter:
         # Ensure output directory exists
         self.output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        fourcc = cv2.VideoWriter_fourcc(*self.codec)
+        fourcc = cv2.VideoWriter_fourcc(*self.codec)  # type: ignore
         self._writer = cv2.VideoWriter(
             str(self.output_path),
             fourcc,

@@ -92,7 +92,7 @@ def load_fer2013(
 
         # Resize if needed
         if image_size != original_size:
-            face = cv2.resize(face.astype("uint8"), image_size)
+            face = cv2.resize(face.astype("uint8"), image_size).astype(np.float32)
 
         faces[i] = face
 
@@ -146,7 +146,7 @@ def augment_image(
     if width_shift_range > 0 or height_shift_range > 0:
         tx = np.random.uniform(-width_shift_range, width_shift_range) * w
         ty = np.random.uniform(-height_shift_range, height_shift_range) * h
-        M = np.float32([[1, 0, tx], [0, 1, ty]])
+        M = np.array([[1, 0, tx], [0, 1, ty]], dtype=np.float32)
         image = cv2.warpAffine(image, M, (w, h), borderMode=cv2.BORDER_REFLECT)
 
     # Random zoom

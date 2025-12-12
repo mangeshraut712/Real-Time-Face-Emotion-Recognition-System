@@ -92,7 +92,7 @@ class EmotionHistory:
             return np.zeros(len(EMOTIONS))
 
         # Simple average
-        return np.mean(list(self.history), axis=0)
+        return np.mean(list(self.history), axis=0)  # type: ignore[no-any-return]
 
     def clear(self) -> None:
         """Clear the history."""
