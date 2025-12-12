@@ -1,5 +1,64 @@
-keras==2.12.0
-tensorflow==2.13.0
-numpy==1.23.5
-imutils
-opencv-python
+# Real-Time Face Emotion Recognition System
+# Python 3.10+ Required
+# Last updated: December 2024
+
+# ============================================
+# Core Deep Learning
+# ============================================
+tensorflow>=2.15.0,<3.0.0      # Neural network framework
+keras>=3.0.0                    # High-level deep learning API
+
+# ============================================
+# Computer Vision
+# ============================================
+opencv-python>=4.9.0            # Image/video processing
+mediapipe>=0.10.9               # Advanced face detection/mesh
+imutils>=0.5.4                  # OpenCV convenience functions
+
+# ============================================
+# Data Processing
+# ============================================
+numpy>=1.26.0,<2.0.0            # Numerical computing
+pandas>=2.1.0                   # Data manipulation
+scipy>=1.11.0                   # Scientific computing
+
+# ============================================
+# Machine Learning
+# ============================================
+scikit-learn>=1.4.0             # ML utilities
+
+# ============================================
+# Image Processing
+# ============================================
+Pillow>=10.2.0                  # Image handling
+
+# ============================================
+# Model Persistence
+# ============================================
+h5py>=3.10.0                    # HDF5 file format
+
+# ============================================
+# Web Interface
+# ============================================
+flask>=3.0.0                    # Web framework
+flask-cors>=4.0.0               # Cross-origin support
+
+# ============================================
+# Configuration
+# ============================================
+python-dotenv>=1.0.0            # Environment variable loading
+
+# ============================================
+# Optional: Performance
+# ============================================
+# onnxruntime>=1.16.0           # Fast CPU inference
+# onnxruntime-gpu>=1.16.0       # Fast GPU inference
+
+# ============================================
+# Optional: Development & Testing
+# ============================================
+# pytest>=8.0.0                 # Testing framework
+# pytest-cov>=4.1.0             # Coverage plugin
+# ruff>=0.1.0                   # Fast Python linter
+# mypy>=1.8.0                   # Static type checking
+# pre-commit>=3.6.0             # Git hooks

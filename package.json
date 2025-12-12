@@ -1,0 +1,12 @@
+{
+    "name": "emotion-ai-root",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "setup": "cd src/web/frontend && npm install",
+        "build": "cd src/web/frontend && npm run build",
+        "dev": "cd src/web/frontend && npm run dev",
+        "lint": "cd src/web/frontend && npm run lint",
+        "start": "./scripts/start.sh"
+    }
+}

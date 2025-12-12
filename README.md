@@ -1,74 +1,162 @@
-# Project Name : Emotion-recognition
-# Table of Content :
-1.[Description](#p1)
+# 🎭 Emotion AI: Real-Time Face Emotion Recognition (v2.0)
 
-2.[Installations](#p2)
+<div align="center">
 
-3.[Usage](#p3)
+![React](https://img.shields.io/badge/React-18.2-61dafb?style=flat&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5.0-646cff?style=flat&logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=flat&logo=typescript&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-State-black?style=flat&logo=react&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=flat&logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15-ff6f00?style=flat&logo=tensorflow&logoColor=white)
 
-4.[Dataset](#p4)
+**Advanced Real-Time Emotion Analysis Powered by Deep Learning & Modern Web Technologies**
 
+</div>
 
+---
 
-![](https://github.com/omar178/Emotion-recognition/blob/master/emotions/Happy.PNG)
-![](https://github.com/omar178/Emotion-recognition/blob/master/emotions/angry.PNG)
+## 🚀 Overview
 
+**Emotion AI** is a state-of-the-art emotion recognition system that leverages **Computer Vision** and **Deep Learning** to detect human emotions in real-time. Built with a privacy-first approach, it processes video feeds locally using a high-performance **Flask** backend and visualizes insights via a premium **React** frontend.
 
+The system uses **MediaPipe** for face detection and a custom **TensorFlow/Keras** model for emotion classification, achieving high accuracy across 7 emotional states: *Angry, Disgust, Scared, Happy, Sad, Surprised, and Neutral*.
 
+## ✨ Key Features
 
-<a id="p1"></a> 
-# Description:
+### 🎨 Modern Frontend Experience
+- **Premium UI**: Designed with **Shadcn/UI**, **Radix Primitives**, and **Glassmorphism** aesthetics.
+- **State Management**: Powered by **Zustand** for seamless global state sharing across components.
+- **Data Visualization**: Real-time emotion probability charts using **Recharts**.
+- **Smooth Animations**: Powered by **Framer Motion** for fluid transitions and layout shifts.
+- **Responsive Layout**: Optimized single-page dashboard that adapts to all screen sizes.
 
-Our Human face is having a mixed emotions so we are to demonstrate the probabilities of these emotions that we have.
+### 🧠 Advanced AI Backend
+- **Multi-Stage Pipeline**: 
+  1. Face detection (MediaPipe Face Mesh)
+  2. Region of Interest (ROI) extraction
+  3. Emotion Classification (CNN Model)
+- **High Performance**: Optimized for 30-60 FPS inference on standard CPUs.
+- **Streaming Architecture**: Low-latency MJPEG video streaming via Flask.
 
-## What does Emotion Recognition mean?
+### 🛠️ Utilities
+- **Session Recording**: Capture emotion data sessions for analysis.
+- **Export Data**: Download session history as **JSON** or **CSV** for external processing.
+- **Keyboard Shortcuts**: Power-user controls for camera, sound, and export.
+- **Audio Feedback**: Context-aware sound effects for interactions.
 
-Emotion recognition is a technique used in software that allows a program to "read" the emotions on a human face using advanced image processing. Companies have been experimenting with combining sophisticated algorithms with image processing techniques that have emerged in the past ten years to understand more about what an image or a video of a person's face tells us about how he/she is feeling and not just that but also showing the probabilities of mixed emotions a face could has.
+---
 
-<a id="p2"></a> 
-# Installations:
--keras
+## 🏗️ Technology Stack
 
--imutils
+| Domain | Technology | Usage |
+|:---:|:---|:---|
+| **Frontend** | **React 18** + **Vite** | Core UI Framework |
+| | **TypeScript** | Type Safety |
+| | **Tailwind CSS** | Styling engine |
+| | **Zustand** | Global State Management |
+| | **TanStack Query** | Server State / API Caching |
+| | **Framer Motion** | Animations |
+| | **Recharts** | Data Visualization |
+| **Backend** | **Python 3.10+** | Core Logic |
+| | **Flask** | Web Server / API |
+| | **TensorFlow** | Emotion Classification Model |
+| | **OpenCV** | Image Processing |
+| | **MediaPipe** | Face Detection |
 
--cv2
+---
 
--numpy
+## 🚀 Quick Start
 
-<a id="p3"></a> 
-# Usage:
+### Prerequisites
+- **Node.js** v18+ 
+- **Python** 3.10+
+- **pip** & **npm**
 
-The program will creat a window to display the scene capture by webcamera and a window representing the probabilities of detected emotions.
+### Installation
 
-> Demo
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/mangeshraut712/Real-Time-Face-Emotion-Recognition-System.git
+   cd Real-Time-Face-Emotion-Recognition-System
+   ```
 
-python real_time_video.py
+2. **Setup Backend**
+   ```bash
+   # Create virtual environment (recommended)
+   python -m venv .venv
+   source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
-You can just use this with the provided pretrained model i have included in the path written in the code file, i have choosen this specificaly since it scores the best accuracy, feel free to choose any but in this case you have to run the later file train_emotion_classifier
-> If you just want to run this demo, the following content can be skipped
-- Train
+   # Install Python dependencies
+   pip install -r requirements.txt
+   ```
 
-- python train_emotion_classifier.py
+3. **Setup Frontend**
+   ```bash
+   cd src/web/frontend
+   npm install
+   npm run build
+   cd ../../..
+   ```
 
+4. **Run the Application**
+   ```bash
+   # Run via script (handles both backend and frontend serving)
+   python run_web.py
+   # OR
+   ./scripts/start.sh
+   ```
 
-<a id="p4"></a> 
-# Dataset:
+   Open your browser at `http://localhost:5000`.
 
-I have used [this](https://www.kaggle.com/c/3364/download-all) dataset
+---
 
-Download it and put the csv in fer2013/fer2013/
+## ⌨️ Keyboard Shortcuts
 
--fer2013 emotion classification test accuracy: 66%
+| Shortcut | Description |
+|:---:|:---|
+| `Ctrl + C` | Toggle Camera On/Off |
+| `Ctrl + S` | Toggle Sound Feedback |
+| `Ctrl + F` | Toggle Fullscreen |
+| `Ctrl + E` | Export Session Data (JSON) |
+| `Ctrl + X` | Clear Session History |
 
+---
 
-# Credits
-This work is inspired from [this](https://github.com/oarriaga/face_classification) great work and the resources of Adrian Rosebrock helped me alot!.
+## 📂 Project Structure
 
-# Ongoing 
-Draw emotions faces next to the detected face.
+```
+├── src/
+│   ├── core/               # Machine Learning Logic
+│   │   ├── face_detector.py     # Face Detection (MediaPipe)
+│   │   └── emotion_detector.py  # Emotion Prediction (TF)
+│   ├── gui/                # Desktop Application (PyQt/Tkinter)
+│   ├── web/
+│   │   ├── app.py          # Flask Application Entry
+│   │   └── frontend/       # React Application
+│   │       ├── src/
+│   │       │   ├── components/  # Dashboard, Header, Charts
+│   │       │   ├── store.ts     # Zustand Store
+│   │       │   └── lib/         # Utilities (API, Utils)
+│   │       └── dist/            # Built Frontend Assets
+├── models/                 # Pre-trained .h5 Models
+├── scripts/                # Launch & Test Scripts
+├── deployment/             # Docker Configuration
+├── docs/                   # Documentation & Assets
+└── tests/                  # Unit & Integration Tests
+```
 
-# Issues & Suggestions
+---
 
-If any issues and suggestions to me, you can create an [issue](https://github.com/omar178/Emotion-recognition/issues).
+## 🤝 Contributing
 
-If you like this work please help me by giving me some stars.
+Contributions are welcome! Please feel free to submit pull requests.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+  <b>Elevating Human-Computer Interaction through Emotion AI</b>
+</div>
