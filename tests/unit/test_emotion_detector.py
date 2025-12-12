@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 import unittest.mock
 
-from src.core.emotion_detector import EmotionDetector, EmotionResult
+from src.core.emotion_detector import EmotionDetector, EmotionResult, EMOTIONS
 from src.core.face_detector import Face
 
 
@@ -19,7 +19,7 @@ class TestEmotionDetector:
             
             # Setup mock model
             mock_model = unittest.mock.MagicMock()
-            mock_model.input_shape = [None, 64, 64, 1]
+            mock_model.input_shape = (None, 64, 64, 1)
             # Mock predict to return 7 probabilities
             mock_model.predict.return_value = np.array([[0.1, 0.1, 0.1, 0.4, 0.1, 0.1, 0.1]])
             mock_load.return_value = mock_model
@@ -42,13 +42,13 @@ class TestEmotionDetector:
         """Test detector initializes correctly."""
         assert detector is not None
         assert detector.model is not None
-        assert len(detector.emotions) == 7
+        assert len(EMOTIONS) == 7
 
     def test_predict_returns_result(self, detector, sample_roi):
         """Test prediction returns EmotionResult."""
         result = detector.predict(sample_roi)
         assert isinstance(result, EmotionResult)
-        assert result.emotion in detector.emotions
+        assert result.emotion in EMOTIONS
         assert 0 <= result.confidence <= 1
 
     def test_probabilities_sum_to_one(self, detector, sample_roi):
