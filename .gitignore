@@ -26,6 +26,7 @@ MANIFEST
 # ============================================
 # Virtual Environments
 # ============================================
+node_modules/
 .venv/
 venv/
 ENV/
