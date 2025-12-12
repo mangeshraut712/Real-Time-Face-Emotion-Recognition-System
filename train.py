@@ -59,7 +59,7 @@ Examples:
     python train.py --model tiny_xception --image-size 48 --learning-rate 0.0005
         """,
     )
-    
+
     # Dataset
     parser.add_argument(
         "--dataset",
@@ -67,7 +67,7 @@ Examples:
         default=Path("fer2013/fer2013/fer2013.csv"),
         help="Path to FER2013 CSV file",
     )
-    
+
     # Model
     parser.add_argument(
         "--model",
@@ -75,14 +75,14 @@ Examples:
         choices=list(MODEL_REGISTRY.keys()),
         help="Model architecture to train (default: mini_xception)",
     )
-    
+
     parser.add_argument(
         "--image-size",
         type=int,
         default=64,
         help="Resize faces to this square size (default: 64)",
     )
-    
+
     # Training
     parser.add_argument(
         "--batch-size",
@@ -90,35 +90,35 @@ Examples:
         default=32,
         help="Training batch size (default: 32)",
     )
-    
+
     parser.add_argument(
         "--epochs",
         type=int,
         default=200,
         help="Maximum training epochs (default: 200)",
     )
-    
+
     parser.add_argument(
         "--patience",
         type=int,
         default=50,
         help="Early stopping patience (default: 50)",
     )
-    
+
     parser.add_argument(
         "--learning-rate",
         type=float,
         default=1e-3,
         help="Initial learning rate (default: 0.001)",
     )
-    
+
     parser.add_argument(
         "--validation-split",
         type=float,
         default=0.2,
         help="Validation set size (default: 0.2)",
     )
-    
+
     # Output
     parser.add_argument(
         "--output-dir",
@@ -126,14 +126,14 @@ Examples:
         default=Path("models"),
         help="Directory for model checkpoints (default: models)",
     )
-    
+
     parser.add_argument(
         "--experiment-name",
         type=str,
         default=None,
         help="Experiment name for logging (auto-generated if not provided)",
     )
-    
+
     # Other
     parser.add_argument(
         "--seed",
@@ -141,31 +141,31 @@ Examples:
         default=42,
         help="Random seed for reproducibility (default: 42)",
     )
-    
+
     parser.add_argument(
         "--tensorboard",
         action="store_true",
         help="Enable TensorBoard logging",
     )
-    
+
     parser.add_argument(
         "--gpu",
         action="store_true",
         default=True,
         help="Use GPU if available (default: True)",
     )
-    
+
     return parser.parse_args()
 
 
 def setup_gpu(use_gpu: bool) -> None:
     """Configure GPU settings."""
     if not use_gpu:
-        tf.config.set_visible_devices([], 'GPU')
+        tf.config.set_visible_devices([], "GPU")
         logger.info("GPU disabled, using CPU only")
         return
-    
-    gpus = tf.config.list_physical_devices('GPU')
+
+    gpus = tf.config.list_physical_devices("GPU")
     if gpus:
         try:
             for gpu in gpus:
@@ -185,14 +185,14 @@ def create_data_generator() -> ImageDataGenerator:
         height_shift_range=0.1,
         zoom_range=0.1,
         horizontal_flip=True,
-        fill_mode='nearest',
+        fill_mode="nearest",
     )
 
 
 def main():
     """Main training function."""
     args = parse_args()
-    
+
     # Setup logging
     logging.basicConfig(
         level=logging.INFO,
@@ -202,7 +202,7 @@ def main():
             logging.FileHandler(args.output_dir / "training.log"),
         ],
     )
-    
+
     # Log configuration
     logger.info("=" * 60)
     logger.info("Emotion Classification Training")
@@ -213,24 +213,24 @@ def main():
     logger.info(f"Epochs: {args.epochs}")
     logger.info(f"Learning rate: {args.learning_rate}")
     logger.info("=" * 60)
-    
+
     # Set seeds for reproducibility
     np.random.seed(args.seed)
     tf.random.set_seed(args.seed)
-    
+
     # Setup GPU
     setup_gpu(args.gpu)
-    
+
     # Create output directory
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    
+
     # Experiment name
     experiment_name = args.experiment_name or f"{args.model}_{datetime.now():%Y%m%d_%H%M%S}"
     experiment_dir = args.output_dir / experiment_name
     experiment_dir.mkdir(parents=True, exist_ok=True)
-    
+
     logger.info(f"Experiment directory: {experiment_dir}")
-    
+
     # Load dataset
     logger.info(f"Loading dataset from {args.dataset}...")
     try:
@@ -242,14 +242,14 @@ def main():
         logger.error(str(e))
         logger.error("Download FER2013 from: https://www.kaggle.com/datasets/msambare/fer2013")
         sys.exit(1)
-    
+
     # Preprocess
     faces = preprocess_input(faces)
     num_classes = emotions.shape[1]
-    
+
     logger.info(f"Dataset shape: {faces.shape}")
     logger.info(f"Number of classes: {num_classes}")
-    
+
     # Split data
     X_train, X_val, y_train, y_val = train_test_split(
         faces,
@@ -259,26 +259,26 @@ def main():
         stratify=emotions.argmax(axis=1),
         random_state=args.seed,
     )
-    
+
     logger.info(f"Training samples: {len(X_train)}")
     logger.info(f"Validation samples: {len(X_val)}")
-    
+
     # Create model
     input_shape = (args.image_size, args.image_size, 1)
     model = get_model(args.model, input_shape, num_classes)
-    
+
     model.compile(
         optimizer=Adam(learning_rate=args.learning_rate),
         loss="categorical_crossentropy",
         metrics=["accuracy"],
     )
-    
+
     logger.info("Model summary:")
     model.summary(print_fn=logger.info)
-    
+
     # Data augmentation
     data_generator = create_data_generator()
-    
+
     # Callbacks
     callbacks = [
         ModelCheckpoint(
@@ -304,7 +304,7 @@ def main():
             verbose=1,
         ),
     ]
-    
+
     if args.tensorboard:
         callbacks.append(
             TensorBoard(
@@ -312,12 +312,12 @@ def main():
                 histogram_freq=1,
             )
         )
-    
+
     # Train
     logger.info("Starting training...")
-    
+
     steps_per_epoch = max(1, len(X_train) // args.batch_size)
-    
+
     history = model.fit(
         data_generator.flow(X_train, y_train, batch_size=args.batch_size),
         steps_per_epoch=steps_per_epoch,
@@ -326,22 +326,22 @@ def main():
         callbacks=callbacks,
         verbose=1,
     )
-    
+
     # Save final model
     final_model_path = experiment_dir / f"{args.model}_final.keras"
     model.save(str(final_model_path))
     logger.info(f"Final model saved to: {final_model_path}")
-    
+
     # Print results
-    best_val_acc = max(history.history['val_accuracy'])
-    best_epoch = history.history['val_accuracy'].index(best_val_acc) + 1
-    
+    best_val_acc = max(history.history["val_accuracy"])
+    best_epoch = history.history["val_accuracy"].index(best_val_acc) + 1
+
     logger.info("=" * 60)
     logger.info("Training Complete!")
     logger.info(f"Best validation accuracy: {best_val_acc:.4f} (epoch {best_epoch})")
     logger.info(f"Model saved to: {experiment_dir}")
     logger.info("=" * 60)
-    
+
     return history
 
 

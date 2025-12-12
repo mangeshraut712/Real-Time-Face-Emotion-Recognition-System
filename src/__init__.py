@@ -18,12 +18,12 @@ __author__ = "Mangesh Raut"
 __license__ = "MIT"
 
 from src.core.emotion_detector import EmotionDetector, EmotionRecognitionPipeline
-from src.core.face_detector import FaceDetector, DetectorBackend
+from src.core.face_detector import DetectorBackend, FaceDetector
 
 __all__ = [
-    "EmotionDetector",
-    "EmotionRecognitionPipeline", 
-    "FaceDetector",
     "DetectorBackend",
+    "EmotionDetector",
+    "EmotionRecognitionPipeline",
+    "FaceDetector",
     "__version__",
 ]

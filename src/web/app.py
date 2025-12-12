@@ -17,8 +17,8 @@ from __future__ import annotations
 import logging
 import threading
 import time
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator, Optional
 
 import cv2
 import numpy as np
@@ -32,66 +32,66 @@ logger = logging.getLogger(__name__)
 
 class VideoStream:
     """Thread-safe video stream handler."""
-    
+
     def __init__(self, camera_index: int = 0):
         self.camera_index = camera_index
-        self.capture: Optional[cv2.VideoCapture] = None
-        self.frame: Optional[np.ndarray] = None
+        self.capture: cv2.VideoCapture | None = None
+        self.frame: np.ndarray | None = None
         self.results: list = []
         self.running = False
         self.lock = threading.Lock()
-        
+
         # Detectors
-        self.face_detector: Optional[FaceDetector] = None
-        self.emotion_detector: Optional[EmotionDetector] = None
-    
+        self.face_detector: FaceDetector | None = None
+        self.emotion_detector: EmotionDetector | None = None
+
     def start(self):
         """Start the video stream."""
         if self.running:
             return
-        
+
         self.capture = cv2.VideoCapture(self.camera_index)
         if not self.capture.isOpened():
             raise RuntimeError(f"Cannot open camera {self.camera_index}")
-        
+
         # Initialize detectors
         self.face_detector = FaceDetector()
         self.emotion_detector = EmotionDetector()
-        
+
         self.running = True
-        
+
         # Start capture thread
         thread = threading.Thread(target=self._capture_loop, daemon=True)
         thread.start()
-        
+
         logger.info("Video stream started")
-    
+
     def _capture_loop(self):
         """Capture and process frames."""
         while self.running:
             if self.capture is None:
                 break
-            
+
             ret, frame = self.capture.read()
             if not ret:
                 continue
-            
+
             # Resize for performance
             frame = cv2.resize(frame, (640, 480))
-            
+
             # Detect
             faces = self.face_detector.detect(frame)
             results = []
-            
+
             if faces:
                 results = self.emotion_detector.detect_emotions(frame, faces)
-                
+
                 # Draw results on the frame for the video feed
                 # Note: The frontend also receives raw data, but this provides a visual debugging feed
                 for result in results:
                     face = result.face
                     color = result.color
-                    
+
                     # Modern rounded rectangle for face
                     # (Simple cv2 doesn't support rounded, but we can keep it clean)
                     cv2.rectangle(
@@ -101,35 +101,35 @@ class VideoStream:
                         color,
                         2,
                     )
-            
+
             with self.lock:
                 self.frame = frame
                 self.results = results
-            
+
             time.sleep(0.01)  # ~100 FPS max limit
-    
-    def get_frame(self) -> Optional[bytes]:
+
+    def get_frame(self) -> bytes | None:
         """Get the current frame as JPEG bytes."""
         with self.lock:
             if self.frame is None:
                 return None
-            
+
             # High quality JPEG for better visuals
-            ret, jpeg = cv2.imencode('.jpg', self.frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
+            ret, jpeg = cv2.imencode(".jpg", self.frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
             if not ret:
                 return None
-            
+
             return jpeg.tobytes()
-    
+
     def get_results(self) -> list:
         """Get the current emotion results."""
         with self.lock:
             return [r.as_dict() for r in self.results]
-    
+
     def stop(self):
         """Stop the video stream."""
         self.running = False
-        
+
         if self.capture is not None:
             self.capture.release()
             self.capture = None
@@ -149,12 +149,12 @@ class VideoStream:
 
         if self.emotion_detector is not None:
             self.emotion_detector = None
-        
+
         logger.info("Video stream stopped")
 
 
 # Global video stream instance
-video_stream: Optional[VideoStream] = None
+video_stream: VideoStream | None = None
 
 
 def create_app() -> Flask:
@@ -162,14 +162,14 @@ def create_app() -> Flask:
     # Define paths based on new structure
     static_folder = Path(__file__).parent / "static"
     template_folder = static_folder
-    
+
     app = Flask(
         __name__,
         static_url_path="",
         static_folder=str(static_folder),
         template_folder=str(template_folder),
     )
-    
+
     # -------------------------------------------------------------------------
     # Routes
     # -------------------------------------------------------------------------
@@ -196,7 +196,7 @@ def create_app() -> Flask:
         response = send_from_directory(str(static_folder / "assets"), path)
         response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
         return response
-    
+
     @app.route("/manifest.json")
     def manifest():
         """Serve PWA manifest if available."""
@@ -229,7 +229,11 @@ def create_app() -> Flask:
         If the path isn't an API or asset, serve index.html.
         """
         path = request.path
-        if path.startswith(("/api/", "/assets/")) or path in ("/video_feed", "/manifest.json", "/vite.svg"):
+        if path.startswith(("/api/", "/assets/")) or path in (
+            "/video_feed",
+            "/manifest.json",
+            "/vite.svg",
+        ):
             return jsonify({"error": "not found"}), 404
         return render_template("index.html")
 
@@ -240,77 +244,75 @@ def create_app() -> Flask:
     @app.route("/video_feed")
     def video_feed():
         """Stream video frames via MJPEG."""
+
         def generate() -> Generator[bytes, None, None]:
             while True:
                 if video_stream is None:
                     time.sleep(0.1)
                     continue
-                
+
                 frame = video_stream.get_frame()
                 if frame is None:
                     time.sleep(0.01)
                     continue
-                
-                yield (
-                    b'--frame\r\n'
-                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n'
-                )
-                
+
+                yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+
                 time.sleep(0.033)  # Limit to ~30 FPS for browser performance
-        
+
         return Response(
             generate(),
-            mimetype='multipart/x-mixed-replace; boundary=frame',
+            mimetype="multipart/x-mixed-replace; boundary=frame",
         )
-    
+
     @app.route("/api/emotions")
     def get_emotions():
         """Get current emotion detection results JSON."""
         if video_stream is None:
             # Return empty if not running, but with valid structure
             return jsonify({"results": []})
-        
+
         results = video_stream.get_results()
         return jsonify({"results": results})
-    
+
     @app.route("/api/start", methods=["POST"])
     def start_stream():
         """Start the video stream."""
         global video_stream
-        
+
         camera_index = request.json.get("camera_index", 0) if request.json else 0
-        
+
         try:
             if video_stream is not None:
                 video_stream.stop()
-            
+
             video_stream = VideoStream(camera_index)
             video_stream.start()
-            
+
             return jsonify({"status": "started"})
         except Exception as e:
             logger.error(f"Failed to start stream: {e}")
             return jsonify({"error": str(e)}), 500
-    
+
     @app.route("/api/stop", methods=["POST"])
     def stop_stream():
         """Stop the video stream."""
         global video_stream
-        
+
         if video_stream is not None:
             video_stream.stop()
             video_stream = None
-        
+
         return jsonify({"status": "stopped"})
-    
+
     @app.route("/api/status")
     def get_status():
         """Get stream status."""
         if video_stream is None:
             return jsonify({"running": False})
-        
+
         return jsonify({"running": video_stream.running})
-    
+
     return app
 
 
@@ -324,15 +326,14 @@ def run_server(
     Run the Flask development server.
     """
     global video_stream
-    
+
     # Configure production-ready logging
     logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
-    
+
     app = create_app()
-    
+
     # Auto-start video stream if requested
     if auto_start:
         try:
@@ -340,10 +341,10 @@ def run_server(
             video_stream.start()
         except Exception as e:
             logger.warning(f"Could not auto-start camera: {e}")
-    
+
     logger.info(f"🚀 Server running at http://{host}:{port}")
     logger.info("hit CTRL+C to stop")
-    
+
     try:
         app.run(host=host, port=port, debug=debug, threaded=True, use_reloader=False)
     finally:

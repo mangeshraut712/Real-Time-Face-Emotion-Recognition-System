@@ -34,26 +34,26 @@ Examples:
     python run_web.py --auto-start       # Auto-start camera on launch
         """,
     )
-    
+
     parser.add_argument(
         "--host",
         default="0.0.0.0",
         help="Host to bind to (default: 0.0.0.0)",
     )
-    
+
     parser.add_argument(
         "--port",
         type=int,
         default=5000,
         help="Port to bind to (default: 5000)",
     )
-    
+
     parser.add_argument(
         "--debug",
         action="store_true",
         help="Enable Flask debug mode",
     )
-    
+
     parser.add_argument(
         "--auto-start",
         action="store_true",
@@ -66,41 +66,41 @@ Examples:
         help="Do not auto-start the camera (default)",
     )
     parser.set_defaults(auto_start=False)
-    
+
     parser.add_argument(
         "--log-level",
         default="INFO",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
         help="Logging level (default: INFO)",
     )
-    
+
     return parser.parse_args()
 
 
 def main():
     """Main entry point."""
     args = parse_args()
-    
+
     # Configure logging
     logging.basicConfig(
         level=getattr(logging, args.log_level),
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
-    
+
     logger = logging.getLogger(__name__)
-    
+
     # Check for Flask
     try:
         from flask import Flask
     except ImportError:
         logger.error("Flask is not installed. Install it with: pip install flask")
         sys.exit(1)
-    
+
     from src.web.app import run_server
-    
+
     logger.info(f"Starting web server at http://{args.host}:{args.port}")
     logger.info("Open this URL in your browser to use the web interface")
-    
+
     try:
         run_server(
             host=args.host,

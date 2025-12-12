@@ -6,21 +6,21 @@ and emotion recognition using deep learning.
 """
 
 from src.core.emotion_detector import (
+    EMOTIONS,
     EmotionDetector,
     EmotionRecognitionPipeline,
     EmotionResult,
-    EMOTIONS,
 )
 from src.core.face_detector import (
+    DetectorBackend,
     Face,
     FaceDetector,
-    DetectorBackend,
 )
 from src.core.models import (
-    get_model,
-    list_models,
-    get_model_info,
     MODEL_REGISTRY,
+    get_model,
+    get_model_info,
+    list_models,
 )
 
 __all__ = [
@@ -29,12 +29,10 @@ __all__ = [
     "EmotionRecognitionPipeline",
     "EmotionResult",
     "EMOTIONS",
-    
     # Face detection
     "Face",
     "FaceDetector",
     "DetectorBackend",
-    
     # Models
     "get_model",
     "list_models",
