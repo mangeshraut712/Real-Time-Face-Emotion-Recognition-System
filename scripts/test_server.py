@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Real AI Emotion Detection Server
 Uses TensorFlow/Keras model + OpenCV for actual emotion detection.

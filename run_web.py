@@ -91,7 +91,7 @@ def main():
 
     # Check for Flask
     try:
-        from flask import Flask
+        from flask import Flask  # noqa: F401
     except ImportError:
         logger.error("Flask is not installed. Install it with: pip install flask")
         sys.exit(1)

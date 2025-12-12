@@ -24,18 +24,15 @@ from src.core.models import (
 )
 
 __all__ = [
-    # Emotion detection
+    "EMOTIONS",
+    "MODEL_REGISTRY",
+    "DetectorBackend",
     "EmotionDetector",
     "EmotionRecognitionPipeline",
     "EmotionResult",
-    "EMOTIONS",
-    # Face detection
     "Face",
     "FaceDetector",
-    "DetectorBackend",
-    # Models
     "get_model",
-    "list_models",
     "get_model_info",
-    "MODEL_REGISTRY",
+    "list_models",
 ]

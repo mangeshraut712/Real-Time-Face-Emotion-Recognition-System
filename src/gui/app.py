@@ -9,8 +9,8 @@ from __future__ import annotations
 
 import logging
 import tkinter as tk
-from pathlib import Path
 from tkinter import messagebox
+from typing import TYPE_CHECKING
 
 import cv2
 from PIL import Image, ImageTk
@@ -18,6 +18,9 @@ from PIL import Image, ImageTk
 from src.core.emotion_detector import EMOTIONS, EmotionDetector, EmotionResult
 from src.core.face_detector import FaceDetector
 from src.utils.video import capture_screenshot
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -169,13 +172,13 @@ class ModernButton(tk.Canvas):
             font=("Helvetica", 11, "bold"),
         )
 
-    def _on_enter(self, event):
+    def _on_enter(self, _event):
         self._draw_button(self.hover_bg)
 
-    def _on_leave(self, event):
+    def _on_leave(self, _event):
         self._draw_button(self.bg)
 
-    def _on_click(self, event):
+    def _on_click(self, _event):
         if self.command:
             self.command()
 

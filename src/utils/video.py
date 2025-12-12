@@ -13,9 +13,12 @@ import time
 from datetime import datetime
 from pathlib import Path
 from queue import Empty, Queue
+from typing import TYPE_CHECKING
 
 import cv2
-import numpy as np
+
+if TYPE_CHECKING:
+    import numpy as np
 
 logger = logging.getLogger(__name__)
 

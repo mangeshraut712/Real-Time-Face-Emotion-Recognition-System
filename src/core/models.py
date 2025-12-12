@@ -65,9 +65,8 @@ def _depthwise_separable_block(
 
     x = layers.Conv2D(filters, 1, padding="same", use_bias=False)(x)
     x = layers.BatchNormalization()(x)
-    x = layers.ReLU(max_value=6)(x)
+    return layers.ReLU(max_value=6)(x)
 
-    return x
 
 
 def _xception_module(
@@ -344,10 +343,7 @@ def efficientnet_emotion(
             expansion = layers.BatchNormalization()(expansion)
 
             # Residual
-            if s == 1 and x.shape[-1] == filters:
-                x = layers.add([x, expansion])
-            else:
-                x = expansion
+            x = layers.add([x, expansion]) if s == 1 and x.shape[-1] == filters else expansion
 
     # Head
     x = layers.Conv2D(320, 1, padding="same", use_bias=False)(x)
@@ -452,7 +448,7 @@ def attention_cnn(
     x = _conv_block(x, 128, 3)
     x = _conv_block(x, 128, 3)
 
-    # Self-attention (simplified)
+    # Self-attention block
     attention = layers.Conv2D(1, 1, activation="sigmoid")(x)
     x = layers.multiply([x, attention])
 

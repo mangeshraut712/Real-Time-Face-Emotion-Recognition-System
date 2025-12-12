@@ -190,6 +190,5 @@ def normalize_face(
     face = np.expand_dims(face, axis=-1)
 
     # Normalize to [-1, 1]
-    face = preprocess_input(face)
+    return preprocess_input(face)
 
-    return face

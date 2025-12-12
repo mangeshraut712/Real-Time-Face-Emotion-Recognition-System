@@ -177,7 +177,7 @@ class EmotionDetector:
             return locations[0]
 
         raise FileNotFoundError(
-            f"Could not find emotion model. Searched: {[str(l) for l in locations]}"
+            f"Could not find emotion model. Searched: {[str(loc) for loc in locations]}"
         )
 
     def _extract_model_zip(self, zip_path: Path) -> None:
@@ -237,9 +237,8 @@ class EmotionDetector:
 
         # Convert to array and add batch dimension
         roi = img_to_array(roi)
-        roi = np.expand_dims(roi, axis=0)
+        return np.expand_dims(roi, axis=0)
 
-        return roi
 
     def predict(
         self,
@@ -278,7 +277,7 @@ class EmotionDetector:
         confidence = float(probs[idx])
 
         # Create result
-        probabilities = {e: float(p) for e, p in zip(EMOTIONS, probs)}
+        probabilities = {e: float(p) for e, p in zip(EMOTIONS, probs, strict=False)}
 
         return EmotionResult(
             face=Face(0, 0, 0, 0),  # Placeholder, will be updated by caller
@@ -303,10 +302,7 @@ class EmotionDetector:
             List of EmotionResult objects
         """
         # Convert to grayscale if needed
-        if len(image.shape) == 3:
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        else:
-            gray = image
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if len(image.shape) == 3 else image
 
         results = []
 
@@ -330,7 +326,7 @@ class EmotionDetector:
         results: list[EmotionResult],
         draw_box: bool = True,
         draw_label: bool = True,
-        draw_emoji: bool = False,
+        _draw_emoji: bool = False,
     ) -> np.ndarray:
         """
         Draw emotion detection results on an image.
@@ -366,7 +362,7 @@ class EmotionDetector:
                 label = f"{result.emotion}: {result.confidence:.1%}"
 
                 # Background for text
-                (text_w, text_h), baseline = cv2.getTextSize(
+                (text_w, text_h), _baseline = cv2.getTextSize(
                     label,
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.7,
@@ -397,7 +393,7 @@ class EmotionDetector:
         """Get the last predicted probabilities."""
         if self._last_probs is None:
             return None
-        return {e: float(p) for e, p in zip(EMOTIONS, self._last_probs)}
+        return {e: float(p) for e, p in zip(EMOTIONS, self._last_probs, strict=False)}
 
     def reset_history(self) -> None:
         """Reset all smoothing histories."""

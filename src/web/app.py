@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Flask Web Application for Emotion Recognition.
 
@@ -14,18 +15,23 @@ Features:
 
 from __future__ import annotations
 
+import contextlib
 import logging
 import threading
 import time
-from collections.abc import Generator
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import cv2
-import numpy as np
 from flask import Flask, Response, jsonify, render_template, request, send_from_directory
 
 from src.core.emotion_detector import EmotionDetector
 from src.core.face_detector import FaceDetector
+
+if TYPE_CHECKING:
+    from collections.abc import Generator
+
+    import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -141,10 +147,8 @@ class VideoStream:
 
         # Release detector resources
         if self.face_detector is not None:
-            try:
+            with contextlib.suppress(Exception):
                 self.face_detector.close()
-            except Exception:
-                pass
             self.face_detector = None
 
         if self.emotion_detector is not None:
