@@ -2,6 +2,7 @@
 
 import numpy as np
 import pytest
+import unittest.mock
 
 from src.core.emotion_detector import EmotionDetector, EmotionResult
 from src.core.face_detector import Face
@@ -12,8 +13,20 @@ class TestEmotionDetector:
 
     @pytest.fixture
     def detector(self):
-        """Create detector instance for testing."""
-        return EmotionDetector()
+        """Create detector instance for testing with mocked model."""
+        with unittest.mock.patch('src.core.emotion_detector.load_model') as mock_load, \
+             unittest.mock.patch('pathlib.Path.exists', return_value=True):
+            
+            # Setup mock model
+            mock_model = unittest.mock.MagicMock()
+            mock_model.input_shape = [None, 64, 64, 1]
+            # Mock predict to return 7 probabilities
+            mock_model.predict.return_value = np.array([[0.1, 0.1, 0.1, 0.4, 0.1, 0.1, 0.1]])
+            mock_load.return_value = mock_model
+
+            # Initialize with dummy path
+            det = EmotionDetector(model_path="dummy_model.hdf5")
+            return det
 
     @pytest.fixture
     def sample_face(self):
