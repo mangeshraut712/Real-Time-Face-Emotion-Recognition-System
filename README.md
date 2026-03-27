@@ -160,3 +160,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <div align="center">
   <b>Elevating Human-Computer Interaction through Emotion AI</b>
 </div>
+
+---
+
+<!-- codex:project-diagram:start -->
+
+## Project Diagram
+
+```mermaid
+flowchart LR
+    A["User"] --> B["Web UI"]
+    B --> C["Inference / API"]
+    C --> D["Models / Data"]
+    B -. feedback .-> A
+```
+
+_How the web layer connects to model or document processing logic._
+
+<!-- codex:project-diagram:end -->
