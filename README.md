@@ -1,162 +1,110 @@
-# 🎭 Emotion AI: Real-Time Face Emotion Recognition (v2.0)
-
 <div align="center">
+
+# 🎭 Emotion AI: Real-Time Face Emotion Recognition
+
+Real-time facial emotion analysis powered by a TensorFlow vision pipeline and a React dashboard.
 
 ![React](https://img.shields.io/badge/React-18.2-61dafb?style=flat&logo=react&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-5.0-646cff?style=flat&logo=vite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=flat&logo=typescript&logoColor=white)
-![Zustand](https://img.shields.io/badge/Zustand-State-black?style=flat&logo=react&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=flat&logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?style=flat&logo=python&logoColor=white)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15-ff6f00?style=flat&logo=tensorflow&logoColor=white)
-
-**Advanced Real-Time Emotion Analysis Powered by Deep Learning & Modern Web Technologies**
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-5C3EE8?style=flat&logo=opencv&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey?style=flat)
 
 </div>
 
----
+## Table of Contents
 
-## 🚀 Overview
+- [Overview](#overview)
+- [Features](#features)
+- [Stack](#stack)
+- [Quick Start](#quick-start)
+- [Project Structure](#project-structure)
+- [Scripts](#scripts)
+- [License](#license)
 
-**Emotion AI** is a state-of-the-art emotion recognition system that leverages **Computer Vision** and **Deep Learning** to detect human emotions in real-time. Built with a privacy-first approach, it processes video feeds locally using a high-performance **Flask** backend and visualizes insights via a premium **React** frontend.
+## Overview
 
-The system uses **MediaPipe** for face detection and a custom **TensorFlow/Keras** model for emotion classification, achieving high accuracy across 7 emotional states: *Angry, Disgust, Scared, Happy, Sad, Surprised, and Neutral*.
+Emotion AI combines local webcam inference, face detection, and emotion classification into a single experience. The project ships with a browser-based dashboard, a desktop GUI, and a training script so you can run the model, inspect predictions, or retrain the pipeline from the same codebase.
 
-## ✨ Key Features
+## Features
 
-### 🎨 Modern Frontend Experience
-- **Premium UI**: Designed with **Shadcn/UI**, **Radix Primitives**, and **Glassmorphism** aesthetics.
-- **State Management**: Powered by **Zustand** for seamless global state sharing across components.
-- **Data Visualization**: Real-time emotion probability charts using **Recharts**.
-- **Smooth Animations**: Powered by **Framer Motion** for fluid transitions and layout shifts.
-- **Responsive Layout**: Optimized single-page dashboard that adapts to all screen sizes.
+- Real-time emotion detection from webcam video with face overlays and confidence labels.
+- Dual interfaces: a Flask-powered web app and a Tkinter-based desktop app.
+- TensorFlow/Keras emotion classification with OpenCV and MediaPipe-based preprocessing.
+- Session-friendly controls for camera toggling, exports, and visual feedback.
+- Optional model retraining and local-first execution without external APIs.
 
-### 🧠 Advanced AI Backend
-- **Multi-Stage Pipeline**: 
-  1. Face detection (MediaPipe Face Mesh)
-  2. Region of Interest (ROI) extraction
-  3. Emotion Classification (CNN Model)
-- **High Performance**: Optimized for 30-60 FPS inference on standard CPUs.
-- **Streaming Architecture**: Low-latency MJPEG video streaming via Flask.
+## Stack
 
-### 🛠️ Utilities
-- **Session Recording**: Capture emotion data sessions for analysis.
-- **Export Data**: Download session history as **JSON** or **CSV** for external processing.
-- **Keyboard Shortcuts**: Power-user controls for camera, sound, and export.
-- **Audio Feedback**: Context-aware sound effects for interactions.
+- Frontend: React 18, TypeScript, Vite, Tailwind CSS, Zustand, Recharts.
+- Backend: Python 3.10+, Flask, OpenCV, MediaPipe, TensorFlow/Keras.
+- Tooling: pytest, Ruff, MyPy, pre-commit, npm scripts for the web client.
 
----
-
-## 🏗️ Technology Stack
-
-| Domain | Technology | Usage |
-|:---:|:---|:---|
-| **Frontend** | **React 18** + **Vite** | Core UI Framework |
-| | **TypeScript** | Type Safety |
-| | **Tailwind CSS** | Styling engine |
-| | **Zustand** | Global State Management |
-| | **TanStack Query** | Server State / API Caching |
-| | **Framer Motion** | Animations |
-| | **Recharts** | Data Visualization |
-| **Backend** | **Python 3.10+** | Core Logic |
-| | **Flask** | Web Server / API |
-| | **TensorFlow** | Emotion Classification Model |
-| | **OpenCV** | Image Processing |
-| | **MediaPipe** | Face Detection |
-
----
-
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
-- **Node.js** v18+ 
-- **Python** 3.10+
-- **pip** & **npm**
 
-### Installation
+- Python 3.10 or newer
+- Node.js 18 or newer
+- `pip` and `npm`
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/mangeshraut712/Real-Time-Face-Emotion-Recognition-System.git
-   cd Real-Time-Face-Emotion-Recognition-System
-   ```
+### Install
 
-2. **Setup Backend**
-   ```bash
-   # Create virtual environment (recommended)
-   python -m venv .venv
-   source .venv/bin/activate  # Windows: .venv\Scripts\activate
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 
-   # Install Python dependencies
-   pip install -r requirements.txt
-   ```
-
-3. **Setup Frontend**
-   ```bash
-   cd src/web/frontend
-   npm install
-   npm run build
-   cd ../../..
-   ```
-
-4. **Run the Application**
-   ```bash
-   # Run via script (handles both backend and frontend serving)
-   python run_web.py
-   # OR
-   ./scripts/start.sh
-   ```
-
-   Open your browser at `http://localhost:5000`.
-
----
-
-## ⌨️ Keyboard Shortcuts
-
-| Shortcut | Description |
-|:---:|:---|
-| `Ctrl + C` | Toggle Camera On/Off |
-| `Ctrl + S` | Toggle Sound Feedback |
-| `Ctrl + F` | Toggle Fullscreen |
-| `Ctrl + E` | Export Session Data (JSON) |
-| `Ctrl + X` | Clear Session History |
-
----
-
-## 📂 Project Structure
-
+cd src/web/frontend
+npm install
+npm run build
+cd ../../..
 ```
+
+### Run
+
+```bash
+# Web app
+python run_web.py
+
+# Desktop GUI
+python run_gui.py
+
+# One-shot build + web launch
+./scripts/start.sh
+
+# Retrain the model
+python train.py
+```
+
+The web interface starts on `http://localhost:5000` by default.
+
+## Project Structure
+
+```text
+.
+├── docs/                 # Research paper and sample screenshots
+├── haarcascade_files/    # Face detection cascades
+├── models/               # Trained emotion models
+├── scripts/              # Launch and test helpers
 ├── src/
-│   ├── core/               # Machine Learning Logic
-│   │   ├── face_detector.py     # Face Detection (MediaPipe)
-│   │   └── emotion_detector.py  # Emotion Prediction (TF)
-│   ├── gui/                # Desktop Application (PyQt/Tkinter)
-│   ├── web/
-│   │   ├── app.py          # Flask Application Entry
-│   │   └── frontend/       # React Application
-│   │       ├── src/
-│   │       │   ├── components/  # Dashboard, Header, Charts
-│   │       │   ├── store.ts     # Zustand Store
-│   │       │   └── lib/         # Utilities (API, Utils)
-│   │       └── dist/            # Built Frontend Assets
-├── models/                 # Pre-trained .h5 Models
-├── scripts/                # Launch & Test Scripts
-├── deployment/             # Docker Configuration
-├── docs/                   # Documentation & Assets
-└── tests/                  # Unit & Integration Tests
+│   ├── core/             # Detection and inference logic
+│   ├── gui/              # Desktop UI
+│   └── web/              # Flask app and React frontend
+├── tests/                # Unit and integration tests
+├── run_gui.py            # Desktop entry point
+├── run_web.py            # Web entry point
+└── train.py              # Model training entry point
 ```
 
----
+## Scripts
 
-## 🤝 Contributing
+- `python run_web.py` starts the Flask web server.
+- `python run_gui.py` opens the desktop emotion-recognition app.
+- `python train.py` retrains the emotion model.
+- `./scripts/start.sh` builds the frontend and launches the web server.
 
-Contributions are welcome! Please feel free to submit pull requests.
+## License
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-<div align="center">
-  <b>Elevating Human-Computer Interaction through Emotion AI</b>
-</div>
+Licensed under the MIT License. See [LICENSE](LICENSE).
