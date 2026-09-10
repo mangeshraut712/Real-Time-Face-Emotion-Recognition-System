@@ -1,6 +1,6 @@
 # Real-Time Face Emotion Recognition System
 # Python 3.10+ Required
-# Last updated: December 2024
+# Last updated: September 2026
 
 # ============================================
 # Core Deep Learning

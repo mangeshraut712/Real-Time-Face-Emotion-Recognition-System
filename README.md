@@ -13,11 +13,18 @@
 
 </div>
 
+<p align="center">
+  <img src="docs/screenshots/dashboard-home.png" alt="Emotion AI dashboard home — Start Analysis, live video pane, and analytics sidebar" width="900" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/live-analysis.png" alt="Live analysis — Happy at 91% confidence with probability bars, timeline, and face overlay" width="900" />
+</p>
+
 ---
 
 ## 🚀 Overview
 
-**Emotion AI** is a state-of-the-art emotion recognition system that leverages **Computer Vision** and **Deep Learning** to detect human emotions in real-time. Built with a privacy-first approach, it processes video feeds locally using a high-performance **Flask** backend and visualizes insights via a premium **React** frontend.
+**Emotion AI** (2026) is a real-time emotion recognition system that uses **Computer Vision** and **Deep Learning** on a local camera feed. A **Flask** backend runs face + emotion inference on-device; a **React** dashboard streams the overlay and charts the seven-class probabilities.
 
 The system uses **MediaPipe** for face detection and a custom **TensorFlow/Keras** model for emotion classification, achieving high accuracy across 7 emotional states: *Angry, Disgust, Scared, Happy, Sad, Surprised, and Neutral*.
 
@@ -140,8 +147,8 @@ The system uses **MediaPipe** for face detection and a custom **TensorFlow/Keras
 │   │       └── dist/            # Built Frontend Assets
 ├── models/                 # Pre-trained .h5 Models
 ├── scripts/                # Launch & Test Scripts
-├── deployment/             # Docker Configuration
-├── docs/                   # Documentation & Assets
+├── docs/                   # Screenshots & docs
+│   └── screenshots/        # Product UI captures
 └── tests/                  # Unit & Integration Tests
 ```
 

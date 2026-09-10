@@ -1,5 +1,5 @@
 /**
- * Dashboard v2.0 - 2025 Enhanced Version
+ * Dashboard v2.0 - 2026 layout
  * Features:
  * - React Query for server state
  * - Zustand for client state

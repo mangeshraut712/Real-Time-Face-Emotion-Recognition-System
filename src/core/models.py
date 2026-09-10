@@ -10,7 +10,7 @@ Available architectures:
 - Lightweight MobileNet-style (fastest)
 - Classic CNN baselines
 
-Updated December 2024.
+Updated September 2026.
 """
 
 from __future__ import annotations

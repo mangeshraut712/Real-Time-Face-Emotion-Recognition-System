@@ -5,7 +5,7 @@ This module provides face detection capabilities with multiple backends:
 - MediaPipe (default, most accurate)
 - Haar Cascades (fallback, lightweight)
 
-Updated December 2024 with MediaPipe Face Detection.
+Updated September 2026 with MediaPipe Face Detection.
 """
 
 from __future__ import annotations
