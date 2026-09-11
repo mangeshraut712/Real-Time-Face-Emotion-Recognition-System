@@ -185,8 +185,10 @@ def create_app() -> Flask:
         has_assets = assets_dir.exists() and any(p.suffix == ".js" for p in assets_dir.iterdir())
         if not has_assets:
             return (
-                "<h1>Frontend not built</h1>"
-                "<p>Run: <code>cd src/web/frontend && npm install && npm run build</code></p>",
+                (
+                    "<h1>Frontend not built</h1>"
+                    "<p>Run: <code>cd src/web/frontend && npm install && npm run build</code></p>"
+                ),
                 500,
             )
         return render_template("index.html")

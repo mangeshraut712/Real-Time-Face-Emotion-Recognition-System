@@ -123,6 +123,8 @@ data/
 # Screenshots & Output
 # ============================================
 screenshots/
+!docs/screenshots/
+!docs/screenshots/*.png
 output/
 results/
 

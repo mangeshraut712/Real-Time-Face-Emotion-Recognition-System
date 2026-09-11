@@ -1,5 +1,5 @@
 /**
- * App v2.0 - 2025 Enhanced Version
+ * App v2.0 - 2026 dashboard shell
  * Features:
  * - React Query Provider
  * - Toast Notifications (Sonner)
