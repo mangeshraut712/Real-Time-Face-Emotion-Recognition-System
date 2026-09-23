@@ -271,7 +271,7 @@ def start_stream():
     except Exception as e:
         is_streaming = False
         release_camera()
-        return jsonify({"error": str(e), "has_model": emotion_model is not None}), 500
+        return jsonify({"error": "Request failed", "has_model": emotion_model is not None}), 500
 
 
 @app.route("/api/stop", methods=["POST"])

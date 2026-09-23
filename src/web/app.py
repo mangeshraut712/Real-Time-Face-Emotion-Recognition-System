@@ -298,7 +298,7 @@ def create_app() -> Flask:
             return jsonify({"status": "started"})
         except Exception as e:
             logger.error(f"Failed to start stream: {e}")
-            return jsonify({"error": str(e)}), 500
+            return jsonify({"error": "Request failed"}), 500
 
     @app.route("/api/stop", methods=["POST"])
     def stop_stream():
@@ -352,7 +352,7 @@ def run_server(
     logger.info("hit CTRL+C to stop")
 
     try:
-        app.run(host=host, port=port, debug=debug, threaded=True, use_reloader=False)
+        app.run(host=host, port=port, debug=False, threaded=True, use_reloader=False)
     finally:
         if video_stream is not None:
             video_stream.stop()
