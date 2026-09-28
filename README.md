@@ -13,13 +13,6 @@
 
 </div>
 
-<p align="center">
-  <img src="docs/screenshots/dashboard-home.png" alt="Emotion AI dashboard home — Start Analysis, live video pane, and analytics sidebar" width="900" />
-</p>
-<p align="center">
-  <img src="docs/screenshots/live-analysis.png" alt="Live analysis — Happy at 91% confidence with probability bars, timeline, and face overlay" width="900" />
-</p>
-
 ---
 
 ## 🚀 Overview
@@ -27,6 +20,22 @@
 **Emotion AI** (2026) is a real-time emotion recognition system that uses **Computer Vision** and **Deep Learning** on a local camera feed. A **Flask** backend runs face + emotion inference on-device; a **React** dashboard streams the overlay and charts the seven-class probabilities.
 
 The system uses **MediaPipe** for face detection and a custom **TensorFlow/Keras** model for emotion classification, achieving high accuracy across 7 emotional states: *Angry, Disgust, Scared, Happy, Sad, Surprised, and Neutral*.
+
+## Screenshots
+
+Framed captures of the live app (current UI). Idle dashboard only — no camera feed or faces.
+
+<div align="center">
+
+<img src="docs/screenshots/01-home.webp" alt="Emotion AI idle dashboard: Start Analysis, empty charts, and timeline" width="720" />
+
+<img src="docs/screenshots/02-theme.webp" alt="Emotion AI dashboard in light theme with the same idle layout" width="720" />
+
+<img src="docs/screenshots/03-shortcuts.webp" alt="Keyboard shortcuts toast listing camera, sound, export, and clear" width="720" />
+
+<img src="docs/screenshots/04-recording.webp" alt="Session recording armed from the header before camera start" width="720" />
+
+</div>
 
 ## ✨ Key Features
 

@@ -125,6 +125,7 @@ data/
 screenshots/
 !docs/screenshots/
 !docs/screenshots/*.png
+!docs/screenshots/*.webp
 output/
 results/
 
