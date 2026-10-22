@@ -161,3 +161,6 @@ models/*.onnx
 # ============================================
 *.whl
 *.tar.gz
+# Local agent tooling
+.agents/
+skills-lock.json
