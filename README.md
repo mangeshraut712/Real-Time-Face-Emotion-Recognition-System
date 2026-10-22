@@ -1,4 +1,4 @@
-# 🎭 Emotion AI: Real-Time Face Emotion Recognition (v2.0)
+# Emotion AI: Real-Time Face Emotion Recognition
 
 <div align="center">
 
@@ -9,17 +9,17 @@
 ![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=flat&logo=python&logoColor=white)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15-ff6f00?style=flat&logo=tensorflow&logoColor=white)
 
-**Advanced Real-Time Emotion Analysis Powered by Deep Learning & Modern Web Technologies**
+Detects faces in a local webcam feed and classifies seven facial expressions with a Keras mini-XCEPTION model, streamed to a React dashboard. Runs locally; there is no hosted demo because it needs your camera and a Python backend.
 
 </div>
 
 ---
 
-## 🚀 Overview
+## Overview
 
 **Emotion AI** (2026) is a real-time emotion recognition system that uses **Computer Vision** and **Deep Learning** on a local camera feed. A **Flask** backend runs face + emotion inference on-device; a **React** dashboard streams the overlay and charts the seven-class probabilities.
 
-The system uses **MediaPipe** for face detection and a custom **TensorFlow/Keras** model for emotion classification, achieving high accuracy across 7 emotional states: *Angry, Disgust, Scared, Happy, Sad, Surprised, and Neutral*.
+The system uses **MediaPipe** for face detection (falling back to Haar cascades if MediaPipe is not installed) and a **TensorFlow/Keras** mini-XCEPTION model (`models/_mini_XCEPTION.102-0.66.hdf5`) for emotion classification across 7 states: *Angry, Disgust, Scared, Happy, Sad, Surprised, and Neutral*.
 
 ## Screenshots
 
@@ -37,24 +37,23 @@ Framed captures of the live app (current UI). Idle dashboard only — no camera 
 
 </div>
 
-## ✨ Key Features
+## Key Features
 
-### 🎨 Modern Frontend Experience
-- **Premium UI**: Designed with **Shadcn/UI**, **Radix Primitives**, and **Glassmorphism** aesthetics.
+### Modern Frontend Experience
+- **UI**: Built with **Shadcn/UI**, **Radix Primitives**, and **Glassmorphism** aesthetics.
 - **State Management**: Powered by **Zustand** for seamless global state sharing across components.
 - **Data Visualization**: Real-time emotion probability charts using **Recharts**.
 - **Smooth Animations**: Powered by **Framer Motion** for fluid transitions and layout shifts.
 - **Responsive Layout**: Optimized single-page dashboard that adapts to all screen sizes.
 
-### 🧠 Advanced AI Backend
+### Advanced AI Backend
 - **Multi-Stage Pipeline**: 
   1. Face detection (MediaPipe Face Mesh)
   2. Region of Interest (ROI) extraction
   3. Emotion Classification (CNN Model)
-- **High Performance**: Optimized for 30-60 FPS inference on standard CPUs.
 - **Streaming Architecture**: Low-latency MJPEG video streaming via Flask.
 
-### 🛠️ Utilities
+### Utilities
 - **Session Recording**: Capture emotion data sessions for analysis.
 - **Export Data**: Download session history as **JSON** or **CSV** for external processing.
 - **Keyboard Shortcuts**: Power-user controls for camera, sound, and export.
@@ -62,7 +61,7 @@ Framed captures of the live app (current UI). Idle dashboard only — no camera 
 
 ---
 
-## 🏗️ Technology Stack
+## Technology Stack
 
 | Domain | Technology | Usage |
 |:---:|:---|:---|
@@ -81,7 +80,7 @@ Framed captures of the live app (current UI). Idle dashboard only — no camera 
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - **Node.js** v18+ 
@@ -126,7 +125,7 @@ Framed captures of the live app (current UI). Idle dashboard only — no camera 
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## Keyboard Shortcuts
 
 | Shortcut | Description |
 |:---:|:---|
@@ -138,7 +137,7 @@ Framed captures of the live app (current UI). Idle dashboard only — no camera 
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 ├── src/
@@ -163,11 +162,11 @@ Framed captures of the live app (current UI). Idle dashboard only — no camera 
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit pull requests.
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
