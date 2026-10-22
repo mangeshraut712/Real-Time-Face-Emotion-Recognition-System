@@ -62,3 +62,5 @@ python-dotenv>=1.0.0            # Environment variable loading
 # ruff>=0.1.0                   # Fast Python linter
 # mypy>=1.8.0                   # Static type checking
 # pre-commit>=3.6.0             # Git hooks
+# emSign CA advisory: require patched CA bundle
+certifi>=2026.10.19
