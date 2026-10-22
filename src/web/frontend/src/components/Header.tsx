@@ -63,14 +63,14 @@ export function Header() {
         <motion.header
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+            className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60"
         >
-            <div className="container flex h-12 md:h-14 max-w-screen-2xl items-center">
+            <div className="container flex h-12 md:h-14 max-w-(--breakpoint-2xl) items-center">
                 <div className="mr-4 flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-primary to-purple-600 text-white flex items-center justify-center shadow-lg shadow-primary/20">
+                    <div className="h-8 w-8 rounded-xl bg-linear-to-br from-primary to-purple-600 text-white flex items-center justify-center shadow-lg shadow-primary/20">
                         <Sparkles className="h-5 w-5" />
                     </div>
-                    <span className="hidden font-bold sm:inline-block text-xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+                    <span className="hidden font-bold sm:inline-block text-xl bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">
                         Emotion AI
                     </span>
                     <Badge
