@@ -138,11 +138,11 @@ const EmotionTimeline = memo(({ history }: { history: { timestamp: number; emoti
                             initial={{ opacity: 0, scale: 0.5, y: 10 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0 }}
-                            className="flex-shrink-0"
+                            className="shrink-0"
                             title={format(item.timestamp, 'HH:mm:ss')}
                         >
                             <div
-                                className="h-10 w-10 rounded-full flex items-center justify-center text-xl shadow-sm hover:scale-110 transition-transform cursor-pointer"
+                                className="h-10 w-10 rounded-full flex items-center justify-center text-xl shadow-xs hover:scale-110 transition-transform cursor-pointer"
                                 style={{
                                     backgroundColor: EMOTION_COLORS[item.emotion] + '20',
                                     border: `2px solid ${EMOTION_COLORS[item.emotion]}`
@@ -372,7 +372,7 @@ export function Dashboard() {
     }, [history])
 
     return (
-        <div className="container p-3 md:p-6 max-w-screen-2xl lg:h-[calc(100vh-3.5rem)] lg:overflow-hidden">
+        <div className="container p-3 md:p-6 max-w-(--breakpoint-2xl) lg:h-[calc(100vh-3.5rem)] lg:overflow-hidden">
             {/* One-page layout on large screens */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 pt-2 lg:h-full">
                 {/* Main Video Feed Area */}
@@ -402,7 +402,7 @@ export function Dashboard() {
                         </div>
 
                         {/* Video Feed */}
-                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-zinc-900 to-black">
+                        <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-zinc-900 to-black">
                             {isStreaming ? (
                                 <img
                                     src="/video_feed"
@@ -428,7 +428,7 @@ export function Dashboard() {
                                         </motion.div>
 
                                         <div className="space-y-2">
-                                            <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+                                            <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-white/60">
                                                 Ready to Analyze?
                                             </h3>
                                             <p className="text-muted-foreground text-base">
@@ -469,7 +469,7 @@ export function Dashboard() {
                         </div>
 
                         {/* Overlay Controls */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex justify-between items-end">
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex justify-between items-end">
                             <div className="text-white text-sm">
                                 {currentResult && (
                                     <span className="flex items-center gap-2">
@@ -512,7 +512,7 @@ export function Dashboard() {
                 >
                     {/* Current Emotion Card */}
                     <div className="premium-card rounded-3xl p-5 relative overflow-hidden group shrink-0">
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <div className="relative z-10">
                             <h3 className="text-sm font-medium text-muted-foreground mb-4">Detected Emotion</h3>
                             <div className="flex items-center gap-4 mb-6">
