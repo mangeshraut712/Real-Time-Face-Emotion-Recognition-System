@@ -3,7 +3,7 @@
 <div align="center">
 
 ![React](https://img.shields.io/badge/React-18.2-61dafb?style=flat&logo=react&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-5.0-646cff?style=flat&logo=vite&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6.4-646cff?style=flat&logo=vite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=flat&logo=typescript&logoColor=white)
 ![Zustand](https://img.shields.io/badge/Zustand-State-black?style=flat&logo=react&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=flat&logo=python&logoColor=white)

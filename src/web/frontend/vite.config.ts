@@ -20,7 +20,8 @@ export default defineConfig({
         rollupOptions: {
             output: {
                 manualChunks: {
-                    'react-vendor': ['react', 'react-dom'],
+                    // react/react-dom intentionally omitted: array-form manualChunks
+                    // produced an empty react-vendor chunk under Vite 6.
                     'motion': ['framer-motion'],
                     'charts': ['recharts'],
                     'ui-core': ['@radix-ui/react-slot', 'class-variance-authority', 'clsx', 'tailwind-merge'],
