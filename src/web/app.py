@@ -125,7 +125,7 @@ class VideoStream:
             if not ret:
                 return None
 
-            return jpeg.tobytes()
+            return bytes(jpeg.tobytes())
 
     def get_results(self) -> list:
         """Get the current emotion results."""
