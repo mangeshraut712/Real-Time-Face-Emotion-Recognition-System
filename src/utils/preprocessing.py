@@ -13,6 +13,8 @@ import cv2
 import numpy as np
 import pandas as pd
 
+from src.utils.labels import encode_emotion_labels
+
 
 def preprocess_input(
     x: np.ndarray,
@@ -104,7 +106,7 @@ def load_fer2013(
     faces = np.expand_dims(faces, -1)
 
     # One-hot encode emotions
-    emotions = pd.get_dummies(data["emotion"]).to_numpy(dtype=np.float32)
+    emotions = encode_emotion_labels(data["emotion"].to_numpy())
 
     print(f"Loaded {len(faces)} images with shape {faces.shape}")
     print(f"Emotion distribution: {dict(data['emotion'].value_counts())}")
