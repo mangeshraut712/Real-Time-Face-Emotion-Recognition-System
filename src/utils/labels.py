@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
 
 NUM_EMOTIONS = 7
@@ -31,4 +33,4 @@ def encode_emotion_labels(labels: np.ndarray, num_classes: int = NUM_EMOTIONS) -
             f"emotion labels must be in 0..{num_classes - 1}, got range "
             f"{int(integers.min())}..{int(integers.max())}"
         )
-    return np.eye(num_classes, dtype=np.float32)[integers]
+    return cast("np.ndarray", np.eye(num_classes, dtype=np.float32)[integers])
