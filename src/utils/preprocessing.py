@@ -172,21 +172,34 @@ def normalize_face(
     Normalize a face image for inference.
 
     Args:
-        face: Input face image (grayscale)
+        face: Input face image (grayscale or BGR)
         target_size: Target size for resizing
 
     Returns:
-        Normalized face ready for model input
+        Normalized face ready for model input with shape (*target_size, 1) and values in [-1, 1]
     """
-    # Ensure grayscale
-    if len(face.shape) == 3:
-        face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
+    # Ensure 2D grayscale
+    if face.ndim == 3:
+        if face.shape[2] == 1:
+            face = face.squeeze(axis=-1)
+        else:
+            face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
 
     # Resize
     face = cv2.resize(face, target_size)
 
+    # Scale floating-point inputs in [0, 1] (or [-1, 1]) to 0-255 uint8 range for equalization
+    if np.issubdtype(face.dtype, np.floating):
+        if face.max() <= 1.0 and face.min() >= 0.0:
+            face = face * 255.0
+        elif face.max() <= 1.0 and face.min() >= -1.0:
+            face = (face + 1.0) * 127.5
+        face = np.clip(face, 0, 255).round().astype(np.uint8)
+    elif face.dtype != np.uint8:
+        face = np.clip(face, 0, 255).astype(np.uint8)
+
     # Histogram equalization for lighting normalization
-    face = cv2.equalizeHist(face.astype(np.uint8))
+    face = cv2.equalizeHist(face)
 
     # Add channel dimension
     face = np.expand_dims(face, axis=-1)
