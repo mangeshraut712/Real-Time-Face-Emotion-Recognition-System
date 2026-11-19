@@ -166,7 +166,7 @@ class MediaPipeFaceDetector:
         h, w = image.shape[:2]
         faces = []
 
-        for detection in results.detections[:max_faces]:
+        for detection in results.detections:
             bbox = detection.location_data.relative_bounding_box
 
             # Convert relative coordinates to absolute
@@ -191,10 +191,10 @@ class MediaPipeFaceDetector:
                 )
             )
 
-        # Sort by area (largest first)
+        # Keep the largest faces: MediaPipe does not order detections by size
         faces.sort(key=lambda f: f.area, reverse=True)
 
-        return faces
+        return faces[:max_faces]
 
     def close(self):
         """Release resources."""
