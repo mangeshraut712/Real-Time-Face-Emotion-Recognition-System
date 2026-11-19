@@ -80,3 +80,26 @@ class TestEmotionDetector:
         # Check that smoothing is applied (confidence should be more stable)
         confidences = [r.confidence for r in results]
         assert len(confidences) == 5
+
+
+class TestEmotionHistory:
+    """EmotionHistory keeps at most max_length predictions."""
+
+    def test_custom_max_length_caps_history(self):
+        from src.core.emotion_detector import EmotionHistory
+
+        history = EmotionHistory(max_length=3)
+        for value in range(5):
+            history.add(np.full(len(EMOTIONS), float(value)))
+
+        assert len(history.history) == 3
+        np.testing.assert_allclose(history.get_smoothed(), np.full(len(EMOTIONS), 3.0))
+
+    def test_default_length_and_independent_instances(self):
+        from src.core.emotion_detector import EmotionHistory
+
+        first, second = EmotionHistory(), EmotionHistory()
+        first.add(np.ones(len(EMOTIONS)))
+
+        assert first.history.maxlen == 10
+        assert len(second.history) == 0

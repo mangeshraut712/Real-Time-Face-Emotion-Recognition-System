@@ -80,7 +80,10 @@ class EmotionHistory:
     """Track emotion history for smoothing predictions."""
 
     max_length: int = 10
-    history: deque = field(default_factory=lambda: deque(maxlen=10))
+    history: deque = field(init=False, repr=False)
+
+    def __post_init__(self) -> None:
+        self.history = deque(maxlen=self.max_length)
 
     def add(self, probabilities: np.ndarray) -> None:
         """Add a new prediction to history."""
