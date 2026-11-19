@@ -193,6 +193,9 @@ def main():
     """Main training function."""
     args = parse_args()
 
+    # Create output directory first: the log file below is opened inside it
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+
     # Setup logging
     logging.basicConfig(
         level=logging.INFO,
@@ -220,9 +223,6 @@ def main():
 
     # Setup GPU
     setup_gpu(args.gpu)
-
-    # Create output directory
-    args.output_dir.mkdir(parents=True, exist_ok=True)
 
     # Experiment name
     experiment_name = args.experiment_name or f"{args.model}_{datetime.now():%Y%m%d_%H%M%S}"
