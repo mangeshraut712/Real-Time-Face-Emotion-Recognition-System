@@ -20,3 +20,16 @@ def test_detect_returns_largest_faces_when_over_max_faces():
     faces = detector.detect(np.zeros((100, 100, 3), dtype=np.uint8), max_faces=2)
 
     assert [face.width for face in faces] == [40, 15]
+
+
+def test_detect_clips_boxes_that_cross_the_left_or_top_edge():
+    # MediaPipe returns negative xmin/ymin for faces touching the frame border.
+    # The box must be cut to the visible part, not shifted right/down.
+    detector = MediaPipeFaceDetector.__new__(MediaPipeFaceDetector)
+    detections = [_detection(-0.1, 0.2, 0.3), _detection(0.5, -0.05, 0.3)]
+    detector.detector = SimpleNamespace(process=lambda _rgb: SimpleNamespace(detections=detections))
+
+    faces = detector.detect(np.zeros((100, 100, 3), dtype=np.uint8), max_faces=2)
+
+    boxes = sorted((face.x, face.y, face.width, face.height) for face in faces)
+    assert boxes == [(0, 20, 20, 30), (50, 0, 30, 25)]
