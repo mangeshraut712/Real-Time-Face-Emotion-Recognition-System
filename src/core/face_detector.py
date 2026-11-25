@@ -183,6 +183,8 @@ class MediaPipeFaceDetector:
             y = max(0, y)
             width = x2 - x
             height = y2 - y
+            if width <= 0 or height <= 0:
+                continue  # nothing of this box is inside the frame
 
             faces.append(
                 Face(
