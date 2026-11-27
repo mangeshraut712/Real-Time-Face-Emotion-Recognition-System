@@ -44,7 +44,8 @@ class VideoCapture:
         Initialize video capture.
 
         Args:
-            source: Camera index or video file path
+            source: Camera index (int, default 0) or a video file path (str,
+                pathlib.Path, or any os.PathLike[str]). A path is stored as str.
             width: Desired frame width
             height: Desired frame height
             fps: Desired frames per second
@@ -53,6 +54,8 @@ class VideoCapture:
         # Normalise path objects to str: OpenCV expects a str filename, and the
         # capture loop relies on a str source to stop at end of file instead of
         # retrying forever as it does for cameras.
+        # The isinstance guard is required: a camera index is an int, and
+        # os.fspath() raises TypeError on anything that is not str or PathLike.
         self.source = os.fspath(source) if isinstance(source, os.PathLike) else source
         self.width = width
         self.height = height

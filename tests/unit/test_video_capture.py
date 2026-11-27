@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 import src.utils.video as video_module
 from src.utils.video import VideoCapture
@@ -121,3 +122,26 @@ def test_path_source_is_passed_to_opencv_as_str(monkeypatch):
     cap.stop()
     assert opened == [str(Path("clips") / "clip.mp4")]
     assert VideoCapture(source=1).source == 1
+
+
+@pytest.mark.parametrize(
+    "source",
+    [0, 1],
+    ids=["default camera", "second camera"],
+)
+def test_camera_index_source_stays_an_int(source):
+    """Regression: the capture loop tells a file from a camera with
+    ``isinstance(self.source, str)`` (see ``_capture_loop``), so a camera index
+    must be stored as an int. ``os.fspath`` raises TypeError on an int, which is
+    why the normalisation is guarded with an ``isinstance(..., os.PathLike)``
+    check instead of being applied to every source.
+    """
+    cap = VideoCapture(source=source) if source else VideoCapture()
+
+    assert cap.source == source
+    assert type(cap.source) is int
+    assert not isinstance(cap.source, str)
+
+
+def test_default_source_is_the_first_camera():
+    assert VideoCapture().source == 0
