@@ -32,20 +32,20 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Scientific/Engineering :: Image Recognition",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 
 dependencies = [
     "certifi>=2026.10.19",
     "tensorflow>=2.15.0,<3.0.0",
-    # 3.15.1 hardens dataset unpickling and H5 group traversal; it needs Python 3.11+.
-    "keras>=3.15.1; python_version >= '3.11'",
-    "keras>=3.12.4,<3.13; python_version < '3.11'",
+    # 3.15.1 hardens dataset unpickling and H5 group traversal. Releases from
+    # 3.13 on need Python 3.11+, which is why the project requires 3.11+ too:
+    # it is the only way to guarantee every install gets a patched keras.
+    "keras>=3.15.1",
     "opencv-python>=4.9.0",
     "mediapipe>=0.10.9",
     "numpy>=1.26.0,<2.0.0",
@@ -142,7 +142,7 @@ known-first-party = ["src", "config"]
 # MyPy Configuration
 # ============================================
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 warn_return_any = true
 warn_unused_configs = true
 ignore_missing_imports = true
