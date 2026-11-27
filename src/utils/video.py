@@ -8,6 +8,7 @@ with thread-safe operations and performance optimizations.
 from __future__ import annotations
 
 import logging
+import os
 import threading
 import time
 from datetime import datetime
@@ -33,7 +34,7 @@ class VideoCapture:
 
     def __init__(
         self,
-        source: int = 0,
+        source: int | str | os.PathLike[str] = 0,
         width: int = 640,
         height: int = 480,
         fps: int = 30,
@@ -43,13 +44,19 @@ class VideoCapture:
         Initialize video capture.
 
         Args:
-            source: Camera index or video file path
+            source: Camera index (int, default 0) or a video file path (str,
+                pathlib.Path, or any os.PathLike[str]). A path is stored as str.
             width: Desired frame width
             height: Desired frame height
             fps: Desired frames per second
             buffer_size: Frame buffer size
         """
-        self.source = source
+        # Normalise path objects to str: OpenCV expects a str filename, and the
+        # capture loop relies on a str source to stop at end of file instead of
+        # retrying forever as it does for cameras.
+        # The isinstance guard is required: a camera index is an int, and
+        # os.fspath() raises TypeError on anything that is not str or PathLike.
+        self.source = os.fspath(source) if isinstance(source, os.PathLike) else source
         self.width = width
         self.height = height
         self.fps = fps
