@@ -175,11 +175,16 @@ class MediaPipeFaceDetector:
             width = int(bbox.width * w)
             height = int(bbox.height * h)
 
-            # Clamp to image bounds
+            # Clip to image bounds: keep the far edge where it is so a box that
+            # starts off-frame (negative xmin/ymin) shrinks instead of shifting.
+            x2 = min(w, x + width)
+            y2 = min(h, y + height)
             x = max(0, x)
             y = max(0, y)
-            width = min(width, w - x)
-            height = min(height, h - y)
+            width = x2 - x
+            height = y2 - y
+            if width <= 0 or height <= 0:
+                continue  # nothing of this box is inside the frame
 
             faces.append(
                 Face(
