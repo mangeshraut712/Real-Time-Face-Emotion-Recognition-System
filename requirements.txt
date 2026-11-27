@@ -7,7 +7,7 @@
 # ============================================
 tensorflow>=2.15.0,<3.0.0      # Neural network framework
 keras>=3.15.1; python_version >= "3.11"  # High-level deep learning API (3.15.1: unpickling + H5 path-traversal fixes)
-keras>=3.0.0; python_version < "3.11"    # 3.13+ needs Python 3.11; no patched release for 3.10
+keras>=3.12.4,<3.13; python_version < "3.11"  # 3.13+ needs Python 3.11; 3.12.4 is the last (most-patched) release for 3.10
 
 # ============================================
 # Computer Vision
