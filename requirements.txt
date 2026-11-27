@@ -1,12 +1,12 @@
 # Real-Time Face Emotion Recognition System
-# Python 3.10+ Required
+# Python 3.11+ Required
 # Last updated: September 2026
 
 # ============================================
 # Core Deep Learning
 # ============================================
 tensorflow>=2.15.0,<3.0.0      # Neural network framework
-keras>=3.0.0                    # High-level deep learning API
+keras>=3.15.1  # High-level deep learning API (3.15.1: unpickling + H5 path-traversal fixes; 3.13+ needs Python 3.11)
 
 # ============================================
 # Computer Vision

@@ -6,7 +6,7 @@
 ![Vite](https://img.shields.io/badge/Vite-6.4-646cff?style=flat&logo=vite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=flat&logo=typescript&logoColor=white)
 ![Zustand](https://img.shields.io/badge/Zustand-State-black?style=flat&logo=react&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=flat&logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11+-3776ab?style=flat&logo=python&logoColor=white)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15-ff6f00?style=flat&logo=tensorflow&logoColor=white)
 
 Detects faces in a local webcam feed and classifies seven facial expressions with a Keras mini-XCEPTION model, streamed to a React dashboard. Runs locally; there is no hosted demo because it needs your camera and a Python backend.
@@ -72,7 +72,7 @@ Framed captures of the live app (current UI). Idle dashboard only — no camera 
 | | **TanStack Query** | Server State / API Caching |
 | | **Framer Motion** | Animations |
 | | **Recharts** | Data Visualization |
-| **Backend** | **Python 3.10+** | Core Logic |
+| **Backend** | **Python 3.11+** | Core Logic |
 | | **Flask** | Web Server / API |
 | | **TensorFlow** | Emotion Classification Model |
 | | **OpenCV** | Image Processing |
@@ -84,7 +84,7 @@ Framed captures of the live app (current UI). Idle dashboard only — no camera 
 
 ### Prerequisites
 - **Node.js** v18+ 
-- **Python** 3.10+
+- **Python** 3.11+
 - **pip** & **npm**
 
 ### Installation
